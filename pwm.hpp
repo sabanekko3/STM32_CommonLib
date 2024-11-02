@@ -45,6 +45,10 @@ namespace SabaneLib{
 			}
 		}
 
+		float get(void){
+			return static_cast<float>(__HAL_TIM_GET_COMPARE(tim, ch))/static_cast<float>(tim->Init.Period);
+		}
+
 		void start(void){
 			HAL_TIM_PWM_Start(tim, ch);
 			HAL_TIMEx_PWMN_Start(tim,ch);
