@@ -10,7 +10,7 @@
 
 #include "arm_math.h"
 
-namespace SabaneLib{
+namespace SabaneLib::Math{
 	////////////////////////////////
 	//Q31 format support funcitons//
 	////////////////////////////////

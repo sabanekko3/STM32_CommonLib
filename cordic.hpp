@@ -15,7 +15,7 @@
 
 #ifdef HAL_CORDIC_MODULE_ENABLED
 
-namespace SabaneLib::MotorMath{
+namespace SabaneLib::Math{
 
 enum class CordicMode:uint32_t{
 	COS_SIN,
@@ -101,7 +101,7 @@ public:
 
 	void start_atan2(float x,float y){
 		cordic->CSR = this->generate_CSR(CordicMode::PHASE_MODULUS,true,false,4,0);
-		set_param(float_to_q15(x),float_to_q15(y));
+		set_param(Math::float_to_q15(x),float_to_q15(y));
 	}
 	void start_atan2(q15_t x,q15_t y){
 		cordic->CSR = this->generate_CSR(CordicMode::PHASE_MODULUS,true,false,4,0);
