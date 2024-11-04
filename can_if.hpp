@@ -32,7 +32,7 @@ namespace SabaneLib{
 		}
 	};
 
-	enum class FilterMode{
+	enum class CanFilterMode{
 		ONLY_STD,
 		ONLY_EXT,
 		STD_AND_EXT,

@@ -10,12 +10,12 @@
 
 #include "main.h"
 
-#ifdef HAL_TIM_MODULE_ENABLED
+
 namespace SabaneLib{
 
 	class IPWM{
 	public:
-		virtual void out(float val) = 0;
+		virtual void operator()(float val) = 0;
 
 		virtual ~IPWM(){}
 	};
@@ -23,8 +23,9 @@ namespace SabaneLib{
 	////////////////////////////////////////////////////////////
 	//Hardware PWM class////////////////////////////////////////
 	////////////////////////////////////////////////////////////
+#ifdef HAL_TIM_MODULE_ENABLED
 	class PWMHard:public IPWM{
-	protected:
+	private:
 		TIM_HandleTypeDef *tim;
 		const uint32_t ch;
 	public:
@@ -33,19 +34,11 @@ namespace SabaneLib{
 			  ch(_ch){
 		}
 
-		void out(float val) override{
-			__HAL_TIM_SET_COMPARE(tim, ch, tim->Init.Period*val);
+		void operator()(float duty) override{//0.0~1.0f
+			__HAL_TIM_SET_COMPARE(tim, ch, tim->Init.Period*duty);
 		}
 
-		void out_toggle(float val = 1.0f){
-			if(__HAL_TIM_GET_COMPARE(tim, ch)!=0){
-				__HAL_TIM_SET_COMPARE(tim, ch,0);
-			}else{
-				__HAL_TIM_SET_COMPARE(tim, ch,val*tim->Init.Period);
-			}
-		}
-
-		float get(void){
+		float get_duty(void){
 			return static_cast<float>(__HAL_TIM_GET_COMPARE(tim, ch))/static_cast<float>(tim->Init.Period);
 		}
 
@@ -62,7 +55,7 @@ namespace SabaneLib{
 		}
 
 	};
-}
 #endif //HAL_TIM_MODULE_ENABLED
+}
 
 #endif /* PWM_HPP_ */

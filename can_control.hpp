@@ -141,7 +141,7 @@ namespace SabaneLib{
 		//////////////////////
 		//can filter setting//
 		//////////////////////
-		void set_filter_mask(uint32_t filter_no,uint32_t id,uint32_t mask,FilterMode mode,bool as_std = true){
+		void set_filter_mask(uint32_t filter_no,uint32_t id,uint32_t mask,CanFilterMode mode,bool as_std = true){
 			CAN_FilterTypeDef filter;
 			uint32_t filter_id;
 			uint32_t filter_mask;
