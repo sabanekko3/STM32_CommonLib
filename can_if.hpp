@@ -12,9 +12,7 @@
 #include "ring_buffer.hpp"
 #include "byte_reader_writer.hpp"
 
-#include <optional>
-#include <string.h>
-#include <memory>
+
 
 namespace SabaneLib{
 	struct CanFrame{

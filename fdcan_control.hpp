@@ -11,6 +11,7 @@
 #include "can_if.hpp"
 #include "main.h"
 
+#include <memory>
 #include <cassert>
 
 #ifdef HAL_FDCAN_MODULE_ENABLED

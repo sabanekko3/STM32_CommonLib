@@ -19,18 +19,22 @@ namespace SabaneLib{
 		float power;
 		uint32_t interval;
 	};
+	inline bool operator==(const PWMState& s1,const PWMState& s2){
+		return (s1.power == s2.power) && (s1.interval == s2.interval);
+	}
 
-	constexpr PWMState end_of_pwm_sequence{0.0f,0};
+
 
 	class ProgramablePWM{
 	private:
-		std::unique_ptr<IPWM> pwm;
-
 		const PWMState *playing_pattern = nullptr;
 		uint32_t pattern_count = 0;
 		uint32_t interval_count = 0;
 
 	public:
+		static constexpr PWMState end_of_pwm_sequence{0.0f,0};
+		std::unique_ptr<IPWM> pwm;
+
 		ProgramablePWM(std::unique_ptr<IPWM> _pwm):
 			pwm(std::move(_pwm)){
 		}
@@ -46,7 +50,7 @@ namespace SabaneLib{
 		}
 
 		bool is_playing(void){
-			return playing_pattern!=nullptr ? true:false;
+			return playing_pattern!=nullptr;
 		}
 
 		void update(void){
@@ -57,7 +61,7 @@ namespace SabaneLib{
 			if(interval_count <= 0){
 				pattern_count ++;
 
-				if(playing_pattern[pattern_count].interval == 0){
+				if(playing_pattern[pattern_count] == end_of_pwm_sequence){
 					playing_pattern = nullptr;
 					(*pwm)(0.0f);
 					return;
@@ -68,8 +72,7 @@ namespace SabaneLib{
 		}
 
 		void out_weak(float val){
-			//if(not is_playing())
-				(*pwm)(val);
+			if(not is_playing())(*pwm)(val);
 		}
 	};
 }

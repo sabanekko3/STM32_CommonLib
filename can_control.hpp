@@ -10,6 +10,8 @@
 
 #include "can_if.hpp"
 
+#include <memory>
+
 namespace SabaneLib{
 #ifdef HAL_CAN_MODULE_ENABLED
 	class CanComm:public ICan{
